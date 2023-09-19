@@ -11,4 +11,4 @@ The control panel will present itself at the bottom of the page during a Lichess
 Expect bugs, lots of them.
 
 ## Demo
-![Lichess cheat demo](/img/demo.png)
+![Lichess cheat demo](/demo/demo.png)
