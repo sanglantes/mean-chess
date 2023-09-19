@@ -1,24 +1,11 @@
 // ==UserScript==
-// @name         			Mean Chess
-// @namespace    			http://example.com/
-// @version     		  0.1
-// @description  			Dishonourable chess
+// @name              Mean Chess
+// @version           0.1
+// @description       Dishonourable chess
 // @author            toybot
-// @connect           example.com
-// @connect						127.0.0.1
-// @resource example  https://example.com/*
-// @match        			https://lichess.org/*
-// @icon         			https://www.google.com/s2/favicons?sz=64&domain=github.com
-// @grant GM_setValue
-// @grant GM_getValue
-// @grant GM.setValue
-// @grant GM.getValue
-// @grant GM_setClipboard
+// @connect	      127.0.0.1
+// @match             https://lichess.org/*
 // @grant GM_xmlhttpRequest
-// @grant unsafeWindow
-// @grant window.close
-// @grant window.focus
-// @grant window.onurlchange
 // ==/UserScript==
 
 (function() {
@@ -110,9 +97,9 @@ function whatPlayerColour(username) {
 function playerToMove() {
 	const playerTurnText = document.querySelector(".rclock-turn__text");
 	if (playerTurnText.textContent == "Your turn") {
-		return whatPlayerColour("fisherfischer");
+		return whatPlayerColour(player);
 	}
-	return (-1) * whatPlayerColour("fisherfischer");
+	return (-1) * whatPlayerColour(player);
 }
 
 function getMoveHistory() { 
