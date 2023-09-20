@@ -168,9 +168,8 @@ function cheatWrapper() {
   let currentPlayerTurn = playerToMove();
   const moveHistory = getMoveHistory();
 
-  // Check if the move history has changed, indicating an opponent's move.
   if (moveHistory !== lastMoveHistory) {
-    lastMoveHistory = moveHistory; // Update the last move history.
+    lastMoveHistory = moveHistory;
     if (currentPlayerTurn === playerColour) {
       var depthInputElement = document.getElementById("depth");
       var depthValue = parseFloat(depthInputElement.value);
@@ -265,7 +264,7 @@ const cssRules = `
     margin: 10px 0;
   }
 
-  #cheatButton {
+  #stopCheat {
     background-color: #f00;
   }
 `;
