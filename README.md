@@ -14,7 +14,7 @@ Expect bugs.
 Based on playability vs. best move trade-offs.
 * Bullet: 0.1s
 * Blitz: 1s
-* \\> Rapid: 3s
+* $\geq$ Rapid: 3s
 
 ## Demo
 ![Lichess cheat demo](/demo/demo.png)
