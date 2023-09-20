@@ -1,5 +1,5 @@
 # meanChess
-Discrete, dishonourable, automatic, and anti-bug-free Lichess cheat engine. Especially optimized for blitz and bullet games.
+Discrete, dishonourable, semi-automatic, and anti-bug-free Lichess cheat engine. Especially optimized for blitz and bullet games.
 
 ## Installing
 * The code in `meanChess.js` is a Tampermonkey/Greasemonkey userscript. 
