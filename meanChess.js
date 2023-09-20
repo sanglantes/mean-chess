@@ -86,7 +86,6 @@ const tileCoordinates = {
 	h6: { x: -3.5, y: 1.5 },
 	h7: { x: -3.5, y: 2.5 },
 	h8: { x: -3.5, y: 3.5 },
-	// Access w/ tileCoordinates['a4']
 };
 
 function whatPlayerColour(username) {
@@ -187,7 +186,6 @@ function cheatWrapper() {
   }
 }
 
-
 function observeNewMove() {
     const targetElements = document.querySelectorAll('.last-move');
     const lastElement = targetElements[targetElements.length - 1];
@@ -204,7 +202,6 @@ function observeNewMove() {
         observer.observe(lastElement, { attributes: true });
     }
 }
-
 
 const markerElement = document.createElementNS("http://www.w3.org/2000/svg", "marker");
 markerElement.setAttribute("id", "arrowhead-g");
@@ -268,7 +265,7 @@ const cssRules = `
     margin: 10px 0;
   }
 
-  #reset {
+  #cheatButton {
     background-color: #f00;
   }
 `;
@@ -294,7 +291,6 @@ stopButton.addEventListener("click", function() {
         observer.disconnect();
     }
 });
-
 
 cheatButton.addEventListener("click", function() {
 	lastMoveHistory = getMoveHistory();
