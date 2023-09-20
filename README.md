@@ -8,8 +8,6 @@ Discrete, dishonourable, semi-automatic, and anti-bug-free Lichess cheat engine.
 ## Usage
 The control panel will present itself at the bottom of the page during a Lichess game. Follow the instructions given.
 
-Expect bugs.
-
 ## Depth recommendation
 Based on playability vs. best move trade-offs.
 | Gamemode | Time |
