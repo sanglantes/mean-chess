@@ -180,18 +180,20 @@ function cheatWrapper() {
 
 function observeNewMove() {
   const targetElements = document.querySelectorAll('.last-move');
+  const lastElement = targetElements[targetElements.length - 1];
 
-  targetElements.forEach((targetElement) => {
+  if (lastElement) {
     const observer = new MutationObserver((mutationsList, observer) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+        	console.log("cheatWrapper called");
           cheatWrapper();
         }
       }
     });
 
-    observer.observe(targetElement, { attributes: true });
-  });
+    observer.observe(lastElement, { attributes: true });
+  }
 }
 
 
