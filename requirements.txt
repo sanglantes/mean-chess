@@ -1,2 +1,2 @@
-flask
-chess
+flask==2.1.2
+chess==1.10.0
