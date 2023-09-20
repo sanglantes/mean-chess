@@ -93,13 +93,13 @@ function whatPlayerColour(username) {
 	}
 	return 1;
 }
-
+	
 function playerToMove() {
-	const playerTurnText = document.querySelector(".rclock-turn__text");
-	if (playerTurnText.textContent == "Your turn") {
-		return whatPlayerColour(player);
+	const movePositionHistoryLength = document.getElementsByTagName("kwdb").length;
+	if (movePositionHistoryLength % 2 == 1) {
+		return 1;
 	}
-	return (-1) * whatPlayerColour(player);
+	return (-1);
 }
 
 function getMoveHistory() { 
