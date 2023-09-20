@@ -9,7 +9,7 @@ Discrete, dishonourable, semi-automatic, and anti-bug-free Lichess cheat engine.
 The control panel will present itself at the bottom of the page during a Lichess game. Follow the instructions given.
 
 ## Depth recommendation
-Based on playability vs. best move trade-offs.
+Based on time vs. best move trade-offs.
 | Gamemode | Time |
 | ------:| -----------:|
 | Bullet       | 0.1 s |
