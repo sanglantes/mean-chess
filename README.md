@@ -13,8 +13,8 @@ Based on time vs. best move trade-offs.
 | Gamemode | Time |
 | ------:| -----------:|
 | Bullet       | 0.1 s |
-| Blitz        | 1s |
-| $\geq$ Rapid | 3s |
+| Blitz        | 1 s |
+| $\geq$ Rapid | +3 s |
 
 ## Demo
 ![Lichess cheat demo](/demo/demo.png)
