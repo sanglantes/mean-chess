@@ -12,9 +12,11 @@ Expect bugs.
 
 ## Depth recommendation
 Based on playability vs. best move trade-offs.
-* Bullet: 0.1s
-* Blitz: 1s
-* $\geq$ Rapid: 3s
+| Gamemode | Time |
+| ------:| -----------:|
+| Bullet       | 0.1 s |
+| Blitz        | 1s |
+| $\geq$ Rapid | 3s |
 
 ## Demo
 ![Lichess cheat demo](/demo/demo.png)
