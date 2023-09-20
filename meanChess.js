@@ -164,24 +164,19 @@ function fetchMove(depth) {
 }
 
 function cheatWrapper() {
-  if (skipFirstMove) {
-    skipFirstMove = false;
-  } else {
-    let currentPlayerTurn = playerToMove();
+  let currentPlayerTurn = playerToMove();
 
-    if (currentPlayerTurn === playerColour) {
-      var depthInputElement = document.getElementById("depth");
-      var depthValue = parseFloat(depthInputElement.value);
+  if (currentPlayerTurn === playerColour) {
+    var depthInputElement = document.getElementById("depth");
+    var depthValue = parseFloat(depthInputElement.value);
 
-      if (!isNaN(depthValue)) {
-        fetchMove(depthValue);
-      } else {
-        console.error("Invalid depth value:", depthInputElement.value);
-      }
+    if (!isNaN(depthValue)) {
+      fetchMove(depthValue);
+    } else {
+      console.error("Invalid depth value:", depthInputElement.value);
     }
   }
 }
-
 
 function observeNewMove() {
   const targetElements = document.querySelectorAll('.last-move');
@@ -190,10 +185,7 @@ function observeNewMove() {
     const observer = new MutationObserver((mutationsList, observer) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-        	let turn = playerToMove();
-        		if (turn == playerColour) {
-            	cheatWrapper();
-						}
+          cheatWrapper();
         }
       }
     });
@@ -228,8 +220,6 @@ if (defsElement) {
 
 var player = document.getElementById("user_tag").textContent;
 var playerColour = whatPlayerColour(player);
-var skipFirstMove = false;
-var skipFirstCheck = false;
 
 const styleElement = document.createElement('style');
 const cssRules = `
@@ -299,10 +289,6 @@ resetButton.addEventListener("click", function() {
 
 
 cheatButton.addEventListener("click", function() { 
-	if (playerToMove() == playerColour && !skipFirstCheck) {
-		skipFirstMove = true;
-		skipFirstCheck = false;
-	}
 	observeNewMove();
 })
 
