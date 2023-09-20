@@ -6,7 +6,7 @@ Discrete, dishonourable, semi-automatic, and anti-bug-free Lichess cheat engine.
 * `app.py` is a Flask server using `python-chess` for chess programming utilities. Run it using `python app.py`. Before doing so, run `pip install -r requirements.txt`. In `app.py`, change `PATH_TO_STOCKFISH` to your local Stockfish engine.
 
 ## Usage
-The control panel will present itself at the bottom of the page during a Lichess game. Follow the instructions given at the bottom of the game page.
+The control panel will present itself at the bottom of the page during a Lichess game. Follow the instructions given.
 
 Expect bugs.
 
