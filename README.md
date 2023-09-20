@@ -12,7 +12,7 @@ The control panel will present itself at the bottom of the page during a Lichess
 Based on time vs. best move trade-offs.
 | Gamemode | Time |
 | ------:| -----------:|
-| Bullet       | 0.05 s |
+| Bullet       | 0.1 s |
 | Blitz        | 1 s |
 | $\geq$ Rapid | +3 s |
 
