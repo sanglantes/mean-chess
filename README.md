@@ -1,5 +1,5 @@
 # meanChess
-Discrete, dishonourable, and semi-automatic Lichess cheat engine. Especially optimized for blitz and bullet games. <b>Application currently suffers from a critical bug where it suddenly stops</b>.
+Discrete, dishonourable, and semi-automatic Lichess cheat engine. Especially optimized for blitz and bullet games. <b>Application currently suffers from a critical bug where it suddenly stops in Firefox</b>.
 
 ## Install
 * The code in `meanChess.js` is a Tampermonkey userscript. 
@@ -12,7 +12,7 @@ The control panel will present itself at the bottom of the page during a Lichess
 Based on time vs. best move trade-offs.
 | Gamemode | Time |
 | ------:| -----------:|
-| Bullet       | 0.1 s |
+| Bullet       | 0.05 s |
 | Blitz        | 1 s |
 | $\geq$ Rapid | +3 s |
 
