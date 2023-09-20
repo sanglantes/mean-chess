@@ -11,6 +11,9 @@
 (function() {
     'use strict';
 
+let lastMoveHistory;
+let observer;
+
 const tileCoordinates = {
 	a1: { x: 3.5, y: -3.5 },
 	a2: { x: 3.5, y: -2.5 },
@@ -93,7 +96,7 @@ function whatPlayerColour(username) {
 	}
 	return 1;
 }
-	
+
 function playerToMove() {
 	const movePositionHistoryLength = document.getElementsByTagName("kwdb").length;
 	if (movePositionHistoryLength % 2 == 1) {
@@ -102,7 +105,7 @@ function playerToMove() {
 	return (-1);
 }
 
-function getMoveHistory() { 
+function getMoveHistory() {
 	const movePositionHistory = document.getElementsByTagName("kwdb");
   let j = 0;
   let algebraicMoveHistory = [];
@@ -150,13 +153,12 @@ function removeArrow() {
 	}
 }
 
-function fetchMove(depth) { 
+function fetchMove(depth) {
 	let moveHistory = getMoveHistory()
 	GM_xmlhttpRequest({
 		method: "GET",
 		url: "http://127.0.0.1:5000/api?algebra=" + moveHistory.toString() + "&depth=" + depth,
 		onload: function(response) {
-			removeArrow();
 			var arrowElements = response.responseText.split(' ')
 			drawArrow(arrowElements[0], arrowElements[1]);
 		}
@@ -165,35 +167,42 @@ function fetchMove(depth) {
 
 function cheatWrapper() {
   let currentPlayerTurn = playerToMove();
+  const moveHistory = getMoveHistory();
 
-  if (currentPlayerTurn === playerColour) {
-    var depthInputElement = document.getElementById("depth");
-    var depthValue = parseFloat(depthInputElement.value);
+  // Check if the move history has changed, indicating an opponent's move.
+  if (moveHistory !== lastMoveHistory) {
+    lastMoveHistory = moveHistory; // Update the last move history.
+    if (currentPlayerTurn === playerColour) {
+      var depthInputElement = document.getElementById("depth");
+      var depthValue = parseFloat(depthInputElement.value);
 
-    if (!isNaN(depthValue)) {
-      fetchMove(depthValue);
-    } else {
-      console.error("Invalid depth value:", depthInputElement.value);
+      if (!isNaN(depthValue)) {
+        console.log("fetchMove called.");
+        removeArrow();
+        fetchMove(depthValue);
+      } else {
+        console.error("Invalid depth value:", depthInputElement.value);
+      }
     }
   }
 }
 
+
 function observeNewMove() {
-  const targetElements = document.querySelectorAll('.last-move');
-  const lastElement = targetElements[targetElements.length - 1];
+    const targetElements = document.querySelectorAll('.last-move');
+    const lastElement = targetElements[targetElements.length - 1];
 
-  if (lastElement) {
-    const observer = new MutationObserver((mutationsList, observer) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-        	console.log("cheatWrapper called");
-          cheatWrapper();
-        }
-      }
-    });
+    if (lastElement) {
+        observer = new MutationObserver((mutationsList, observer) => {
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    cheatWrapper();
+                }
+            }
+        });
 
-    observer.observe(lastElement, { attributes: true });
-  }
+        observer.observe(lastElement, { attributes: true });
+    }
 }
 
 
@@ -270,27 +279,25 @@ const controlBoxDiv = document.createElement('div');
 controlBoxDiv.classList.add('control-box');
 controlBoxDiv.innerHTML = `
   <button id="startCheat" class="cheatButton">Start Cheat</button>
-  <button id="reset" class="cheatButton">Reset</button>
+  <button id="stopCheat" class="cheatButton">Stop</button>
   <input id="depth" type="text" placeholder="Analysis depth (seconds)">
   <p>Warning: The first move must be made by yourself.</p>
-  <p>If the arrows do not update accordingly, please press the Reset button.</p>
 `;
 
 document.body.appendChild(controlBoxDiv);
 
 const cheatButton = document.getElementById("startCheat");
-const resetButton = document.getElementById("reset");
+const stopButton = document.getElementById("stopCheat");
 
-resetButton.addEventListener("click", function() {
-	let originalWidth = document.body.style.width;
-	document.body.style.width = "700px";
-	setTimeout(function() {
-		document.body.style.width = originalWidth;
-	}, 150);
+stopButton.addEventListener("click", function() {
+    if (observer) {
+        observer.disconnect();
+    }
 });
 
 
-cheatButton.addEventListener("click", function() { 
+cheatButton.addEventListener("click", function() {
+	lastMoveHistory = getMoveHistory();
 	observeNewMove();
 })
 
