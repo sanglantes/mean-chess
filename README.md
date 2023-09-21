@@ -11,7 +11,7 @@ The control panel will present itself at the bottom of the page during a Lichess
 <b>meanChess</b> does not work when playing anonymously.
 
 ## Bugs
-1. May stop working when making many premoves in succession. Solution: Press "Stop" followed by "Start Cheat". Alternatively, get gud.
+1. May stop working when making many premoves in succession. Solution: Press "Stop" followed by "Start cheat". Alternatively, get gud.
 2. Arrows may not have arrowheads. Solution: Draw an arrow.
 
 ## Depth recommendation
