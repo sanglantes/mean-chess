@@ -10,7 +10,7 @@
 
 (function() {
     'use strict';
-
+//woah, actually bug free (large extent)
 let lastMoveHistory;
 let observer;
 
@@ -175,9 +175,6 @@ function cheatWrapper() {
       var depthValue = parseFloat(depthInputElement.value);
 
       if (!isNaN(depthValue)) {
-        removeArrow();
-        console.log("cheatWrapper called fetchMove");
-        console.log("\n")
         fetchMove(depthValue);
       } else {
         console.error("Invalid depth value:", depthInputElement.value);
@@ -194,7 +191,7 @@ function observeNewMove() {
         observer = new MutationObserver((mutationsList, observer) => {
             for (const mutation of mutationsList) {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                	console.log("Observer called");
+                  removeArrow();
                   cheatWrapper();
                 }
             }
