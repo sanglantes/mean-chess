@@ -91,7 +91,7 @@ const tileCoordinates = {
 function whatPlayerColour(username) {
 	let whitePlayer = document.querySelector(".player.color-icon.is.white.text .user-link").textContent;
 	if (whitePlayer.includes(username)) {
-		return -1;
+		return (-1);
 	}
 	return 1;
 }
@@ -109,15 +109,15 @@ function getMoveHistory() {
   let j = 0;
   let algebraicMoveHistory = [];
   for (let i = 0; i < movePositionHistory.length; i += 2) {
-	const move1 = movePositionHistory[i].textContent;
-	let move2 = '';
-    if (i + 1 < movePositionHistory.length) {
-    	move2 = movePositionHistory[i + 1].textContent;
-    }
+		const move1 = movePositionHistory[i].textContent;
+		let move2 = '';
+	    if (i + 1 < movePositionHistory.length) {
+	    	move2 = movePositionHistory[i + 1].textContent;
+	    }
 
-    algebraicMoveHistory.push(move1 + ' ' + move2);
-    j++;
-  }
+	    algebraicMoveHistory.push(move1 + ' ' + move2);
+	    j++;
+	  }
   return algebraicMoveHistory.toString().replace(/,/g, ' ');
 }
 
@@ -175,8 +175,9 @@ function cheatWrapper() {
       var depthValue = parseFloat(depthInputElement.value);
 
       if (!isNaN(depthValue)) {
-        console.log("fetchMove called.");
         removeArrow();
+        console.log("cheatWrapper called fetchMove");
+        console.log("\n")
         fetchMove(depthValue);
       } else {
         console.error("Invalid depth value:", depthInputElement.value);
@@ -193,7 +194,8 @@ function observeNewMove() {
         observer = new MutationObserver((mutationsList, observer) => {
             for (const mutation of mutationsList) {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                    cheatWrapper();
+                	console.log("Observer called");
+                  cheatWrapper();
                 }
             }
         });
