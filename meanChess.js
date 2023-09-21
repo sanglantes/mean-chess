@@ -196,7 +196,7 @@ function observeNewMove() {
 
 function getDepth() {
 	if (document.getElementById("depth").value == '') {
-		return "1"; // No need to make it string, but it makes it more consistent
+		return "0.5"; // No need to make it string, but it makes it more consistent
 	}
 	return document.getElementById("depth").value;
 }
@@ -290,7 +290,7 @@ controlBoxDiv.innerHTML = `
     <button id="moveButton" class="cheatButton">Get move</button>
   <button id="stopCheat" class="cheatButton">Stop</button>
   <input id="depth" type="text" placeholder="Analysis depth (seconds)">
-  <p>Warning: The first move must be made by yourself.</p>
+  <p>Warning: A piece on the board must have previously moved before starting cheat.</p>
 `;
 
 document.body.appendChild(controlBoxDiv);
@@ -302,6 +302,7 @@ const getBestMoveButton = document.getElementById("moveButton");
 getBestMoveButton.addEventListener("click", function() {
 	let depth = getDepth();
 	fetchMove(depth);
+	removeArrow();
 });
 
 stopButton.addEventListener("click", function() {
