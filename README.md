@@ -14,7 +14,7 @@ The control panel will present itself at the bottom of the page during a Lichess
 
 ## Depth recommendation
 Based on time vs. best move trade-offs.
-| Gamemode | Time |
+| Gamemode | Depth |
 | ------:| -----------:|
 | Bullet       | 0.05 s |
 | Blitz        | 1 s |
