@@ -242,10 +242,15 @@ const cssRules = `
     background-color: #555;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 1.5%;
     margin: 5px;
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .cheatButton:hover {
+  	background-color: #444;
   }
 
   #depth {
@@ -266,6 +271,14 @@ const cssRules = `
   #stopCheat {
     background-color: #f00;
   }
+
+  #stopCheat:hover {
+  	background-color: #d00;
+  }
+
+  #startCheat {
+  	padding: 10px 15%;
+  }
 `;
 styleElement.textContent = cssRules;
 document.head.appendChild(styleElement);
@@ -273,7 +286,8 @@ document.head.appendChild(styleElement);
 const controlBoxDiv = document.createElement('div');
 controlBoxDiv.classList.add('control-box');
 controlBoxDiv.innerHTML = `
-  <button id="startCheat" class="cheatButton">Start Cheat</button>
+  <button id="startCheat" class="cheatButton">Start cheat</button><br>
+    <button id="moveButton" class="cheatButton">Get move</button>
   <button id="stopCheat" class="cheatButton">Stop</button>
   <input id="depth" type="text" placeholder="Analysis depth (seconds)">
   <p>Warning: The first move must be made by yourself.</p>
@@ -283,6 +297,11 @@ document.body.appendChild(controlBoxDiv);
 
 const cheatButton = document.getElementById("startCheat");
 const stopButton = document.getElementById("stopCheat");
+const getBestMoveButton = document.getElementById("moveButton");
+
+getBestMoveButton.addEventListener("click", function() {
+	fetchMove(document.getElementById("depth").value);
+});
 
 stopButton.addEventListener("click", function() {
     if (observer) {
@@ -292,6 +311,7 @@ stopButton.addEventListener("click", function() {
 
 cheatButton.addEventListener("click", function() {
 	lastMoveHistory = getMoveHistory();
+    fetchMove(document.getElementById("depth").value);
 	observeNewMove();
 })
 
