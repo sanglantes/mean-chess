@@ -22,4 +22,4 @@ Based on time vs. best move trade-offs.
 
 ## Demo
 ![Lichess cheat demo](/demo/demo.png)
-![Cheat control panel demo](/demo/cheat-console-demo.png)
+![Cheat control panel demo](/demo/cheat-console-demo.PNG)
