@@ -171,17 +171,11 @@ function cheatWrapper() {
   if (moveHistory !== lastMoveHistory) {
     lastMoveHistory = moveHistory;
     if (currentPlayerTurn === playerColour) {
-      var depthInputElement = document.getElementById("depth");
-      var depthValue = parseFloat(depthInputElement.value);
-
-      if (!isNaN(depthValue)) {
-        fetchMove(depthValue);
-      } else {
-        console.error("Invalid depth value:", depthInputElement.value);
+    	let depth = getDepth();
+      fetchMove(depth);
       }
     }
   }
-}
 
 function observeNewMove() {
     const targetElements = document.querySelectorAll('.last-move');
@@ -196,9 +190,15 @@ function observeNewMove() {
                 }
             }
         });
-
         observer.observe(lastElement, { attributes: true });
     }
+}
+
+function getDepth() {
+	if (document.getElementById("depth").value == '') {
+		return "1"; // No need to make it string, but it makes it more consistent
+	}
+	return document.getElementById("depth").value;
 }
 
 const markerElement = document.createElementNS("http://www.w3.org/2000/svg", "marker");
@@ -300,7 +300,8 @@ const stopButton = document.getElementById("stopCheat");
 const getBestMoveButton = document.getElementById("moveButton");
 
 getBestMoveButton.addEventListener("click", function() {
-	fetchMove(document.getElementById("depth").value);
+	let depth = getDepth();
+	fetchMove(depth);
 });
 
 stopButton.addEventListener("click", function() {
@@ -311,7 +312,8 @@ stopButton.addEventListener("click", function() {
 
 cheatButton.addEventListener("click", function() {
 	lastMoveHistory = getMoveHistory();
-    fetchMove(document.getElementById("depth").value);
+	let depth = getDepth();
+  fetchMove(depth);
 	observeNewMove();
 })
 
