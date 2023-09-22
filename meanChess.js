@@ -121,7 +121,7 @@ function getMoveHistory() {
   return algebraicMoveHistory.toString().replace(/,/g, ' ');
 }
 
-function drawArrow(startSquare, destinationSquare) {
+function drawArrow(startSquare, destinationSquare, opacity, color, arrowHead) {
 	const svgNS = "http://www.w3.org/2000/svg";
 	const newElement = document.createElementNS(svgNS, "g");
 
@@ -129,11 +129,11 @@ function drawArrow(startSquare, destinationSquare) {
 	newElement.setAttribute("cgHash", cgHashValue);
 
 	const lineElement = document.createElementNS(svgNS, "line");
-	lineElement.setAttribute("stroke", "#15781B");
+	lineElement.setAttribute("stroke", color);
 	lineElement.setAttribute("stroke-width", "0.15625");
 	lineElement.setAttribute("stroke-linecap", "round");
-	lineElement.setAttribute("marker-end", "url(#arrowhead-g)");
-	lineElement.setAttribute("opacity", "1");
+	lineElement.setAttribute("marker-end", "url(#arrowhead-" + arrowHead + ")");
+	lineElement.setAttribute("opacity", opacity);
 	lineElement.setAttribute("x1", playerColour * tileCoordinates[startSquare]['x']);
 	lineElement.setAttribute("y1", playerColour * tileCoordinates[startSquare]['y']);
 	lineElement.setAttribute("x2", playerColour * tileCoordinates[destinationSquare]['x']);
@@ -146,22 +146,44 @@ function drawArrow(startSquare, destinationSquare) {
 }
 
 function removeArrow() {
-	const parentG = document.querySelector(".cg-shapes g");
-	if (parentG && parentG.lastChild) {
-		parentG.removeChild(parentG.lastChild);
-	}
+    const parentG = document.querySelector(".cg-shapes g");
+    while (parentG.firstChild) {
+      parentG.removeChild(parentG.firstChild);
+    }
 }
 
-function fetchMove(depth) {
+function fetchMove(depth, discrete) {
 	let moveHistory = getMoveHistory()
-	GM_xmlhttpRequest({
-		method: "GET",
-		url: "http://127.0.0.1:5000/api?algebra=" + moveHistory.toString() + "&depth=" + depth,
-		onload: function(response) {
-			var arrowElements = response.responseText.split(' ')
-			drawArrow(arrowElements[0], arrowElements[1]);
-		}
-	});
+	if (!discrete) {
+		GM_xmlhttpRequest({
+			method: "GET",
+			url: "http://127.0.0.1:5000/api?algebra=" + moveHistory.toString() + "&depth=" + depth + "&discrete=0",
+			onload: function(response) {
+				var arrowElements = response.responseText.split(' ')
+				drawArrow(arrowElements[0], arrowElements[1], 1, "#15781B", "g");
+			}
+		});
+	}
+
+	else {
+		GM_xmlhttpRequest({
+			method: "GET",
+			url: "http://127.0.0.1:5000/api?algebra=" + moveHistory.toString() + "&depth=" + depth + "&discrete=1",
+			onload: function(response) {
+				let moves = JSON.parse(response.responseText);
+				let bestMove = moves[0];
+				let discreteMove = moves[1];
+
+				let bestMoveStartSqr = bestMove.substring(0, 2);
+				let bestMoveDestSqr = bestMove.substring(2);
+				let discreteMoveStartSqr = discreteMove.substring(0, 2);
+				let discreteMoveDestSqr = discreteMove.substring(2);
+
+				drawArrow(bestMoveStartSqr, bestMoveDestSqr, 1, "#15781B", "g");
+				drawArrow(discreteMoveStartSqr, discreteMoveDestSqr, 0.5, "#5C85D6", "d");
+			}
+		});
+	}
 }
 
 function cheatWrapper() {
@@ -172,7 +194,7 @@ function cheatWrapper() {
     lastMoveHistory = moveHistory;
     if (currentPlayerTurn === playerColour) {
     	let depth = getDepth();
-      fetchMove(depth);
+      fetchMove(depth, isDiscrete());
       }
     }
   }
@@ -201,6 +223,15 @@ function getDepth() {
 	return document.getElementById("depth").value;
 }
 
+function isDiscrete() {
+	const discrete = document.getElementById("discrete");
+	if (discrete.checked) {
+		return true;
+	}
+	return false;
+}
+
+// ************************************ NORMAL
 const markerElement = document.createElementNS("http://www.w3.org/2000/svg", "marker");
 markerElement.setAttribute("id", "arrowhead-g");
 markerElement.setAttribute("orient", "auto");
@@ -214,14 +245,31 @@ markerElement.setAttribute("cgKey", "g");
 const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
 pathElement.setAttribute("d", "M0,0 V4 L3,2 Z");
 pathElement.setAttribute("fill", "#15781B");
+// ************************************ NORMAL
 
+// ************************************ DISCRETE
+const markerElementD = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+markerElementD.setAttribute("id", "arrowhead-d");
+markerElementD.setAttribute("orient", "auto");
+markerElementD.setAttribute("overflow", "visible");
+markerElementD.setAttribute("markerWidth", "4");
+markerElementD.setAttribute("markerHeight", "4");
+markerElementD.setAttribute("refX", "2.05");
+markerElementD.setAttribute("refY", "2");
+markerElementD.setAttribute("cgKey", "g");
+
+const pathElementD = document.createElementNS("http://www.w3.org/2000/svg", "path");
+pathElementD.setAttribute("d", "M0,0 V4 L3,2 Z");
+pathElementD.setAttribute("fill", "#5C85D6");
+// ************************************ DISCRETE
 markerElement.appendChild(pathElement);
+markerElementD.appendChild(pathElementD);
 
 const defsElement = document.querySelector(".cg-shapes defs");
 
 if (defsElement) {
   defsElement.appendChild(markerElement);
-} else {
+  defsElement.appendChild(markerElementD);
 }
 
 var player = document.getElementById("user_tag").textContent;
@@ -229,56 +277,64 @@ var playerColour = whatPlayerColour(player);
 
 const styleElement = document.createElement('style');
 const cssRules = `
-  .control-box {
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-  }
+.control-box {
+  background-color: #333;
+  color: white;
+  padding: 8px;
+  border-radius: 2px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
 
-  .cheatButton {
-    background-color: #555;
-    color: white;
-    border: none;
-    padding: 10px 1.5%;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+.cheatButton {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 10px 1.5%;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-  .cheatButton:hover {
-  	background-color: #444;
-  }
+.cheatButton:hover {
+  background-color: #444;
+}
 
-  #depth {
-    background-color: #ddd;
-    color: #333;
-    border: none;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    width: 20%;
-  }
+#depth {
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  width: 20%;
+}
 
-  p {
-    color: #aaa;
-    margin: 10px 0;
-  }
+p {
+  color: #aaa;
+  margin: 10px 0;
+}
 
-  #stopCheat {
-    background-color: #f00;
-  }
+#stopCheat {
+  background-color: #f00;
+}
 
-  #stopCheat:hover {
-  	background-color: #d00;
-  }
+#stopCheat:hover {
+  background-color: #d00;
+}
 
-  #startCheat {
-  	padding: 10px 15%;
-  }
+#startCheat {
+  width: 50%;
+}
+
+.spancont {
+	width: 75%;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
 `;
 styleElement.textContent = cssRules;
 document.head.appendChild(styleElement);
@@ -286,11 +342,17 @@ document.head.appendChild(styleElement);
 const controlBoxDiv = document.createElement('div');
 controlBoxDiv.classList.add('control-box');
 controlBoxDiv.innerHTML = `
-  <button id="startCheat" class="cheatButton">Start cheat</button><br>
-    <button id="moveButton" class="cheatButton">Get move</button>
-  <button id="stopCheat" class="cheatButton">Stop</button>
-  <input id="depth" type="text" placeholder="Analysis depth (seconds)">
-  <p>Warning: A piece on the board must have previously moved before starting cheat.</p>
+<div class="control-box">
+    <button id="startCheat" class="cheatButton">Start Cheat</button><br>
+    <span class="spancont">
+    <input type="checkbox" id="discrete">
+    <label for="discrete">Multiple Arrows</label>
+    <button id="moveButton" class="cheatButton">Get Move</button>
+    <button id="stopCheat" class="cheatButton">Stop</button>
+    <input id="depth" type="text" placeholder="Analysis depth (seconds)">
+    <p>Warning: A piece on the board must have previously moved before starting cheat.</p>
+	</span>
+</div>
 `;
 
 document.body.appendChild(controlBoxDiv);
@@ -301,7 +363,7 @@ const getBestMoveButton = document.getElementById("moveButton");
 
 getBestMoveButton.addEventListener("click", function() {
 	let depth = getDepth();
-	fetchMove(depth);
+	fetchMove(depth, isDiscrete());
 	removeArrow();
 });
 
@@ -314,7 +376,7 @@ stopButton.addEventListener("click", function() {
 cheatButton.addEventListener("click", function() {
 	lastMoveHistory = getMoveHistory();
 	let depth = getDepth();
-  fetchMove(depth);
+  fetchMove(depth, isDiscrete());
 	observeNewMove();
 })
 
