@@ -24,5 +24,5 @@ Based on time vs. best move trade-offs.
 | $\geq$ Rapid | +3 s |
 
 ## Demo
-![Lichess cheat demo](/demo/demo.png)
-![Cheat control panel demo](/demo/cheat-console-demo.PNG)
+[mean-chess-demo.webm](https://github.com/sanglantes/mean-chess/assets/101125878/942a80c3-8ea4-4c80-91e6-7f7392106fe3)
+
