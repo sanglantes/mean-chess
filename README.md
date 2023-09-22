@@ -15,7 +15,7 @@ MeanChess does not work when playing anonymously.
 2. Arrows may not have arrowheads. Solution: Draw an arrow.
 3. The first suggestion might show best move for opponent. This only happens once.
 
-The mentioned bugs occurs in Chrome, and I have yet to see 1 and 2 in Firefox and Firefox forks.
+The mentioned bugs occur in Chrome, and I have yet to see 1 and 2 in Firefox and Firefox forks.
 
 ## Depth recommendation
 Based on time vs. best move trade-offs.
