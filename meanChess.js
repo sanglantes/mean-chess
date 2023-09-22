@@ -159,7 +159,8 @@ function fetchMove(depth, discrete) {
 			method: "GET",
 			url: "http://127.0.0.1:5000/api?algebra=" + moveHistory.toString() + "&depth=" + depth + "&discrete=0",
 			onload: function(response) {
-				var arrowElements = response.responseText.split(' ')
+				var arrowElements = response.responseText.split(' ');
+				if (arrowElements[1].length > 2) { arrowElements[1] = arrowElements[1].slice(0, 2); }
 				drawArrow(arrowElements[0], arrowElements[1], 1, "#15781B", "g");
 			}
 		});
@@ -180,7 +181,7 @@ function fetchMove(depth, discrete) {
 				let discreteMoveDestSqr = discreteMove.substring(2);
 
 				drawArrow(bestMoveStartSqr, bestMoveDestSqr, 1, "#15781B", "g");
-				drawArrow(discreteMoveStartSqr, discreteMoveDestSqr, 0.5, "#5C85D6", "d");
+				drawArrow(discreteMoveStartSqr, discreteMoveDestSqr, 0.6, "#5C85D6", "d");
 			}
 		});
 	}
