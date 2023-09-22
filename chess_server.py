@@ -15,7 +15,7 @@ def algebraic_to_fen(algebraic_notation):
 
 def get_best_move(fen, depth, discrete):
     board = chess.Board(fen)
-    engine = chess.engine.SimpleEngine.popen_uci("stockfish/stockfish-windows-x86-64-avx2.exe")
+    engine = chess.engine.SimpleEngine.popen_uci("PATH_TO_STOCKFISH")
 
     if not discrete:
         result = engine.play(board, chess.engine.Limit(time=depth))
