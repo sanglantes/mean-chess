@@ -1,5 +1,4 @@
-from flask import Flask, jsonify, request
-import json
+from flask import Flask, request
 import chess, chess.engine
 
 app = Flask(__name__)
