@@ -1,4 +1,4 @@
-# meanChess
+# MeanChess
 Discrete, dishonourable, and semi-automatic Lichess cheat engine. Especially optimized for blitz and bullet games.
 
 ## Install
@@ -8,7 +8,7 @@ Discrete, dishonourable, and semi-automatic Lichess cheat engine. Especially opt
 ## Usage
 The control panel will present itself at the bottom of the page during a Lichess game. Follow the instructions given. MeanChess supports "Discrete mode" in which the player is given two arrows. The green arrow will always represent the best move given a position whilst the blue arrow is an average move at best, and a mistake at worst. If the player wishes to only get the best move once, they may press the "Get move" button.  
 
-<b>meanChess</b> does not work when playing anonymously.
+MeanChess does not work when playing anonymously.
 
 ## Bugs
 1. May stop working when making many premoves in succession. Solution: Press "Stop" followed by "Start Cheat". Alternatively, get gud.
