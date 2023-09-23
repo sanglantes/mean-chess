@@ -10,7 +10,7 @@
 
 (function() {
     'use strict';
-//woah, actually bug free (large extent)
+window.addEventListener("load", function() {
 let lastMoveHistory;
 let observer;
 
@@ -379,6 +379,7 @@ cheatButton.addEventListener("click", function() {
 	let depth = getDepth();
   fetchMove(depth, isDiscrete());
 	observeNewMove();
-})
+});
+});
 
 })();
