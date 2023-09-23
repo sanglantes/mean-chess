@@ -176,9 +176,9 @@ function fetchMove(depth, discrete) {
 				let discreteMove = moves[1];
 
 				let bestMoveStartSqr = bestMove.substring(0, 2);
-				let bestMoveDestSqr = bestMove.substring(2);
+				let bestMoveDestSqr = bestMove.substring(2).slice(0, 2);
 				let discreteMoveStartSqr = discreteMove.substring(0, 2);
-				let discreteMoveDestSqr = discreteMove.substring(2);
+				let discreteMoveDestSqr = discreteMove.substring(0, 2).slice(0, 2);
 
 				drawArrow(bestMoveStartSqr, bestMoveDestSqr, 1, "#15781B", "g");
 				drawArrow(discreteMoveStartSqr, discreteMoveDestSqr, 0.6, "#5C85D6", "d");
