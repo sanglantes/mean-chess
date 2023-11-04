@@ -2,7 +2,7 @@
 // @name              Mean Chess
 // @version           0.1
 // @description       Dishonourable chess
-// @author            toybot
+// @author            kcl
 // @connect	      127.0.0.1
 // @match             https://lichess.org/*
 
