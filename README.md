@@ -1,7 +1,7 @@
 # MeanChess
 Discrete, dishonourable, and semi-automatic Lichess cheat engine. Especially optimized for blitz and bullet games.
 
-I wrote this on a whim in high school. Check out [zonolraid45's](https://github.com/zonalraid45/mean-chess) fork that's easier to work with.
+I wrote this on a whim in high school. Check out [zonalraid45's](https://github.com/zonalraid45/mean-chess) fork that's easier to work with.
 
 ## Install
 * The code in `meanChess.js` is a Tampermonkey userscript. 
