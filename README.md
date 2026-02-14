@@ -1,6 +1,8 @@
 # MeanChess
 Discrete, dishonourable, and semi-automatic Lichess cheat engine. Especially optimized for blitz and bullet games.
 
+I wrote this on a whim in high school. Check out [zonolraid45's](https://github.com/zonalraid45/mean-chess) fork that's easier to work with.
+
 ## Install
 * The code in `meanChess.js` is a Tampermonkey userscript. 
 * `chess_server.py` is a Flask server using `python-chess` for chess programming utilities. Run it using `python chess_server.py`. Before doing so, run `pip install -r requirements.txt`. Change `PATH_TO_STOCKFISH` to your local Stockfish engine.
